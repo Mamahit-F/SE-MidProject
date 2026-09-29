@@ -1,0 +1,20 @@
+CREATE TABLE reports (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    reporter_id BIGINT NOT NULL,
+    title VARCHAR(200),
+    location VARCHAR(255) NOT NULL,
+    category VARCHAR(100),
+    description TEXT NOT NULL,
+    urgency VARCHAR(20) DEFAULT 'MEDIUM',
+    status VARCHAR(30) NOT NULL DEFAULT 'PENDING_VERIFICATION',
+    rejection_reason TEXT,
+    notes TEXT,
+    assigned_staff_id BIGINT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    approved_at TIMESTAMP NULL,
+    processed_at TIMESTAMP NULL,
+    resolved_at TIMESTAMP NULL,
+    CONSTRAINT fk_report_reporter FOREIGN KEY (reporter_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_report_assigned_staff FOREIGN KEY (assigned_staff_id) REFERENCES users (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

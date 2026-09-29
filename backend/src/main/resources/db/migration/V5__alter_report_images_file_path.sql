@@ -1,0 +1,1 @@
+ALTER TABLE report_images MODIFY COLUMN file_path LONGTEXT NOT NULL;
