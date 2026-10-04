@@ -73,36 +73,63 @@ public class AuthService {
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
-        String fullName = request.getEffectiveFullName();
-        if (fullName.isEmpty()) {
-            throw new BadRequestException("Nama lengkap wajib diisi");
+        try {
+            String fullName = request.getEffectiveFullName();
+            if (fullName.isEmpty()) {
+                throw new BadRequestException("Nama lengkap wajib diisi");
+            }
+
+            if (request.getUsername() == null || request.getUsername().trim().isEmpty()) {
+                throw new BadRequestException("Username wajib diisi");
+            }
+
+            if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+                throw new BadRequestException("Email wajib diisi");
+            }
+
+            if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+                throw new BadRequestException("Password wajib diisi");
+            }
+
+            String username = request.getUsername().trim().toLowerCase();
+            String email = request.getEmail().trim().toLowerCase();
+
+            if (userRepository.existsByUsername(username)) {
+                throw new ConflictException("Username '" + request.getUsername().trim() + "' sudah terdaftar.");
+            }
+
+            if (userRepository.existsByEmail(email)) {
+                throw new ConflictException("Alamat email '" + request.getEmail().trim() + "' sudah terdaftar.");
+            }
+
+            User user = new User();
+            user.setFullName(fullName);
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setRole(Role.USER);
+            user.setStatus(UserStatus.ACTIVE);
+            user.setPhone(request.getPhone() != null ? request.getPhone().trim() : null);
+            user.setDepartment(request.getDepartment() != null && !request.getDepartment().trim().isEmpty()
+                    ? request.getDepartment().trim()
+                    : "Mahasiswa / Civitas Kampus");
+            user.setAvatar("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150");
+
+            User savedUser = userRepository.save(user);
+
+            String token = tokenProvider.generateTokenFromUser(savedUser.getId(), savedUser.getUsername(), savedUser.getRole().name());
+            UserResponse userResponse = userMapper.toResponse(savedUser);
+
+            return new AuthResponse(token, userResponse);
+        } catch (ConflictException | BadRequestException ex) {
+            throw ex;
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
+            throw new ConflictException("Email atau username sudah terdaftar di database.");
+        } catch (org.springframework.dao.DataAccessException ex) {
+            throw new BadRequestException("Terjadi kegagalan database saat registrasi: " + (ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage()));
+        } catch (Exception ex) {
+            throw new BadRequestException("Gagal melakukan registrasi: " + ex.getMessage());
         }
-
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new ConflictException("Username '" + request.getUsername() + "' sudah terdaftar.");
-        }
-
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new ConflictException("Alamat email '" + request.getEmail() + "' sudah terdaftar.");
-        }
-
-        User user = new User();
-        user.setFullName(fullName);
-        user.setUsername(request.getUsername().trim().toLowerCase());
-        user.setEmail(request.getEmail().trim().toLowerCase());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.USER);
-        user.setStatus(UserStatus.ACTIVE);
-        user.setPhone(request.getPhone());
-        user.setDepartment(request.getDepartment() != null ? request.getDepartment() : "Mahasiswa / Civitas Kampus");
-        user.setAvatar("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150");
-
-        User savedUser = userRepository.save(user);
-
-        String token = tokenProvider.generateTokenFromUser(savedUser.getId(), savedUser.getUsername(), savedUser.getRole().name());
-        UserResponse userResponse = userMapper.toResponse(savedUser);
-
-        return new AuthResponse(token, userResponse);
     }
 
     @Transactional(readOnly = true)

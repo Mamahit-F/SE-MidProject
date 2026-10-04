@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping({"/api/auth", "/auth"})
 @Tag(name = "Authentication", description = "Endpoints untuk registrasi, login, dan autentikasi pengguna")
 public class AuthController {
 
@@ -27,8 +27,18 @@ public class AuthController {
     @PostMapping("/register")
     @Operation(summary = "Registrasi Pengguna Baru", description = "Mendaftarkan user baru dengan role USER")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
-        AuthResponse response = authService.register(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        try {
+            AuthResponse response = authService.register(request);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (com.example.cleanliness.exception.ConflictException | com.example.cleanliness.exception.BadRequestException ex) {
+            throw ex;
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
+            throw new com.example.cleanliness.exception.ConflictException("Username atau email sudah terdaftar.");
+        } catch (org.springframework.dao.DataAccessException ex) {
+            throw new com.example.cleanliness.exception.BadRequestException("Terjadi kegagalan database saat registrasi: " + (ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage()));
+        } catch (Exception ex) {
+            throw new com.example.cleanliness.exception.BadRequestException("Registrasi gagal: " + ex.getMessage());
+        }
     }
 
     @PostMapping("/login")

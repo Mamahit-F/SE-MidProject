@@ -1,0 +1,15 @@
+# Created at 2026-10-05T03:21:26.006
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '#'.
+
+# Created at 2026-10-05T03:21:26.008
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# There is insufficient memory for the Java Runtime Environment to continue.'.
+
+# Created at 2026-10-05T03:21:26.008
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# Native memory allocation (mmap) failed to map 67108864 bytes for G1 virtual space'.
+
+# Created at 2026-10-05T03:21:26.009
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# An error report file with more information is saved as:'.
+
+# Created at 2026-10-05T03:21:26.025
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '# D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\hs_err_pid23108.log'.
+
