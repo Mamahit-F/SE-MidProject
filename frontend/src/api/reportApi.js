@@ -17,7 +17,7 @@ export const reportApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports({ ...params, userId });
     }
-    const response = await axiosClient.get('/reports/my', {
+    const response = await axiosClient.get('/api/reports/my', {
       params: { ...params, listOnly: true },
     });
     return response;
@@ -27,7 +27,7 @@ export const reportApi = {
     if (shouldUseMock()) {
       return mockStorage.getReportById(id);
     }
-    return axiosClient.get(`/reports/${id}`);
+    return axiosClient.get(`/api/reports/${id}`);
   },
 
   getPending: async (params = {}) => {
@@ -128,7 +128,7 @@ export const reportApi = {
       return axiosClient.patch(`/staff/reports/${reportId}/resolve`, { notes });
     }
 
-    return axiosClient.get(`/reports/${reportId}`);
+    return axiosClient.get(`/api/reports/${reportId}`);
   },
 
   getStats: async () => {
