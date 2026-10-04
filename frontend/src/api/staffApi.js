@@ -7,7 +7,7 @@ export const staffApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports(params);
     }
-    return axiosClient.get('/staff/reports', {
+    return axiosClient.get('/api/staff/reports', {
       params: { ...params, listOnly: true },
     });
   },
@@ -16,7 +16,7 @@ export const staffApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports({ ...params, assignedStaffId: staffId });
     }
-    return axiosClient.get('/staff/reports', {
+    return axiosClient.get('/api/staff/reports', {
       params: { ...params, listOnly: true },
     });
   },
@@ -25,7 +25,7 @@ export const staffApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports(params);
     }
-    return axiosClient.get('/staff/reports', {
+    return axiosClient.get('/api/staff/reports', {
       params: { ...params, listOnly: true },
     });
   },
@@ -34,7 +34,7 @@ export const staffApi = {
     if (shouldUseMock()) {
       return mockStorage.getOverallStats();
     }
-    return axiosClient.get('/staff/dashboard');
+    return axiosClient.get('/api/staff/dashboard');
   },
 
   processReport: async (id, notes = '') => {
@@ -46,7 +46,7 @@ export const staffApi = {
         notes
       );
     }
-    return axiosClient.patch(`/staff/reports/${id}/process`, { notes });
+    return axiosClient.patch(`/api/staff/reports/${id}/process`, { notes });
   },
 
   resolveReport: async (id, notes = '') => {
@@ -58,6 +58,6 @@ export const staffApi = {
         notes
       );
     }
-    return axiosClient.patch(`/staff/reports/${id}/resolve`, { notes });
+    return axiosClient.patch(`/api/staff/reports/${id}/resolve`, { notes });
   },
 };

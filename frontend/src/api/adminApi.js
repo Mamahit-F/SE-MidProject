@@ -7,7 +7,7 @@ export const adminApi = {
     if (shouldUseMock()) {
       return mockStorage.getOverallStats();
     }
-    return axiosClient.get('/admin/dashboard');
+    return axiosClient.get('/api/admin/dashboard');
   },
 
   getPendingReports: async (params = {}) => {
@@ -17,7 +17,7 @@ export const adminApi = {
         status: REPORT_STATUS.PENDING_VERIFICATION,
       });
     }
-    return axiosClient.get('/admin/reports/pending', {
+    return axiosClient.get('/api/admin/reports/pending', {
       params: { ...params, listOnly: true },
     });
   },
@@ -26,7 +26,7 @@ export const adminApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports(params);
     }
-    return axiosClient.get('/admin/reports', {
+    return axiosClient.get('/api/admin/reports', {
       params: { ...params, listOnly: true },
     });
   },
@@ -40,7 +40,7 @@ export const adminApi = {
         'Disetujui Admin'
       );
     }
-    return axiosClient.patch(`/admin/reports/${id}/approve`);
+    return axiosClient.patch(`/api/admin/reports/${id}/approve`);
   },
 
   rejectReport: async (id, reason) => {
@@ -52,20 +52,20 @@ export const adminApi = {
         reason
       );
     }
-    return axiosClient.patch(`/admin/reports/${id}/reject`, { reason });
+    return axiosClient.patch(`/api/admin/reports/${id}/reject`, { reason });
   },
 
   getAllStaff: async (params = {}) => {
     if (shouldUseMock()) {
       return mockStorage.getUsers({ ...params, role: ROLES.STAFF });
     }
-    return axiosClient.get('/admin/staff', { params });
+    return axiosClient.get('/api/admin/staff', { params });
   },
 
   getAllGeneralUsers: async (params = {}) => {
     if (shouldUseMock()) {
       return mockStorage.getUsers({ ...params, role: ROLES.USER });
     }
-    return axiosClient.get('/admin/users', { params });
+    return axiosClient.get('/api/admin/users', { params });
   },
 };

@@ -6,7 +6,7 @@ export const authApi = {
     if (shouldUseMock()) {
       return mockStorage.findUserByCredentials(credentials.identifier, credentials.password);
     }
-    const response = await axiosClient.post('/auth/login', credentials);
+    const response = await axiosClient.post('/api/auth/login', credentials);
     return response;
   },
 
@@ -14,7 +14,7 @@ export const authApi = {
     if (shouldUseMock()) {
       return mockStorage.registerUser(userData);
     }
-    const response = await axiosClient.post('/auth/register', userData);
+    const response = await axiosClient.post('/api/auth/register', userData);
     return response;
   },
 
@@ -26,7 +26,7 @@ export const authApi = {
       }
       throw new Error('Tidak ada sesi aktif');
     }
-    const response = await axiosClient.get('/auth/profile');
+    const response = await axiosClient.get('/api/auth/profile');
     return response;
   },
 
@@ -34,8 +34,8 @@ export const authApi = {
     if (shouldUseMock()) {
       return mockStorage.updateUser(id, data);
     }
-    // Call /auth/profile or /users/me for self update
-    const response = await axiosClient.put('/auth/profile', data);
+    // Call /api/auth/profile or /api/users/me for self update
+    const response = await axiosClient.put('/api/auth/profile', data);
     return response;
   },
 
@@ -47,7 +47,7 @@ export const authApi = {
     }
     const formData = new FormData();
     formData.append('file', file);
-    const response = await axiosClient.post('/auth/profile-photo', formData, {
+    const response = await axiosClient.post('/api/auth/profile-photo', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -59,6 +59,6 @@ export const authApi = {
     if (shouldUseMock()) {
       return { success: true };
     }
-    return axiosClient.post('/auth/logout');
+    return axiosClient.post('/api/auth/logout');
   },
 };

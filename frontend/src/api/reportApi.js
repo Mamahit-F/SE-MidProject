@@ -7,7 +7,7 @@ export const reportApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports(params);
     }
-    const response = await axiosClient.get('/admin/reports', {
+    const response = await axiosClient.get('/api/admin/reports', {
       params: { ...params, listOnly: true },
     });
     return response;
@@ -37,7 +37,7 @@ export const reportApi = {
         status: REPORT_STATUS.PENDING_VERIFICATION,
       });
     }
-    const response = await axiosClient.get('/admin/reports/pending', {
+    const response = await axiosClient.get('/api/admin/reports/pending', {
       params: { ...params, listOnly: true },
     });
     return response;
@@ -69,7 +69,7 @@ export const reportApi = {
         'Laporan disetujui Admin'
       );
     }
-    return axiosClient.patch(`/admin/reports/${id}/approve`);
+    return axiosClient.patch(`/api/admin/reports/${id}/approve`);
   },
 
   reject: async (id, reason) => {
@@ -81,7 +81,7 @@ export const reportApi = {
         reason
       );
     }
-    return axiosClient.patch(`/admin/reports/${id}/reject`, { reason });
+    return axiosClient.patch(`/api/admin/reports/${id}/reject`, { reason });
   },
 
   process: async (id, notes = '') => {
@@ -93,7 +93,7 @@ export const reportApi = {
         notes
       );
     }
-    return axiosClient.patch(`/staff/reports/${id}/process`, { notes });
+    return axiosClient.patch(`/api/staff/reports/${id}/process`, { notes });
   },
 
   resolve: async (id, notes = '') => {
@@ -105,7 +105,7 @@ export const reportApi = {
         notes
       );
     }
-    return axiosClient.patch(`/staff/reports/${id}/resolve`, { notes });
+    return axiosClient.patch(`/api/staff/reports/${id}/resolve`, { notes });
   },
 
   updateStatus: async (reportId, status, actorUser, notes = '') => {
@@ -114,18 +114,18 @@ export const reportApi = {
     }
 
     if (status === REPORT_STATUS.APPROVED || status === 'Disetujui') {
-      return axiosClient.patch(`/admin/reports/${reportId}/approve`);
+      return axiosClient.patch(`/api/admin/reports/${reportId}/approve`);
     }
     if (status === REPORT_STATUS.REJECTED || status === 'Ditolak') {
-      return axiosClient.patch(`/admin/reports/${reportId}/reject`, {
+      return axiosClient.patch(`/api/admin/reports/${reportId}/reject`, {
         reason: notes || 'Ditolak oleh Admin',
       });
     }
     if (status === REPORT_STATUS.PROCESSING || status === 'Diproses') {
-      return axiosClient.patch(`/staff/reports/${reportId}/process`, { notes });
+      return axiosClient.patch(`/api/staff/reports/${reportId}/process`, { notes });
     }
     if (status === REPORT_STATUS.RESOLVED || status === 'Ditangani') {
-      return axiosClient.patch(`/staff/reports/${reportId}/resolve`, { notes });
+      return axiosClient.patch(`/api/staff/reports/${reportId}/resolve`, { notes });
     }
 
     return axiosClient.get(`/api/reports/${reportId}`);
@@ -135,6 +135,6 @@ export const reportApi = {
     if (shouldUseMock()) {
       return mockStorage.getOverallStats();
     }
-    return axiosClient.get('/admin/dashboard');
+    return axiosClient.get('/api/admin/dashboard');
   },
 };

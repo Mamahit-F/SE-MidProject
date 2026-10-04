@@ -7,42 +7,42 @@ export const userApi = {
     if (shouldUseMock()) {
       return mockStorage.getUsers(params);
     }
-    return axiosClient.get('/admin/users', { params });
+    return axiosClient.get('/api/admin/users', { params });
   },
 
   getById: async (id) => {
     if (shouldUseMock()) {
       return mockStorage.getUserById(id);
     }
-    return axiosClient.get(`/admin/users/${id}`);
+    return axiosClient.get(`/api/admin/users/${id}`);
   },
 
   create: async (userData) => {
     if (shouldUseMock()) {
       return mockStorage.createUserByAdmin(userData);
     }
-    return axiosClient.post('/admin/users', userData);
+    return axiosClient.post('/api/admin/users', userData);
   },
 
   update: async (id, data) => {
     if (shouldUseMock()) {
       return mockStorage.updateUser(id, data);
     }
-    return axiosClient.put(`/admin/users/${id}`, data);
+    return axiosClient.put(`/api/admin/users/${id}`, data);
   },
 
   toggleStatus: async (id) => {
     if (shouldUseMock()) {
       return mockStorage.toggleUserStatus(id);
     }
-    return axiosClient.patch(`/admin/users/${id}/toggle-status`);
+    return axiosClient.patch(`/api/admin/users/${id}/toggle-status`);
   },
 
   getDashboardStats: async () => {
     if (shouldUseMock()) {
       return mockStorage.getOverallStats();
     }
-    return axiosClient.get('/user/dashboard');
+    return axiosClient.get('/api/user/dashboard');
   },
 };
 
@@ -51,7 +51,7 @@ export const staffApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports({ ...params, assignedStaffId: staffId });
     }
-    return axiosClient.get('/staff/reports', {
+    return axiosClient.get('/api/staff/reports', {
       params: { ...params, listOnly: true },
     });
   },
@@ -60,7 +60,7 @@ export const staffApi = {
     if (shouldUseMock()) {
       return mockStorage.getReports(params);
     }
-    return axiosClient.get('/staff/reports', {
+    return axiosClient.get('/api/staff/reports', {
       params: { ...params, listOnly: true },
     });
   },
@@ -71,20 +71,20 @@ export const adminApi = {
     if (shouldUseMock()) {
       return mockStorage.getOverallStats();
     }
-    return axiosClient.get('/admin/dashboard');
+    return axiosClient.get('/api/admin/dashboard');
   },
 
   getAllStaff: async (params = {}) => {
     if (shouldUseMock()) {
       return mockStorage.getUsers({ ...params, role: ROLES.STAFF });
     }
-    return axiosClient.get('/admin/staff', { params });
+    return axiosClient.get('/api/admin/staff', { params });
   },
 
   getAllGeneralUsers: async (params = {}) => {
     if (shouldUseMock()) {
       return mockStorage.getUsers({ ...params, role: ROLES.USER });
     }
-    return axiosClient.get('/admin/users', { params });
+    return axiosClient.get('/api/admin/users', { params });
   },
 };
