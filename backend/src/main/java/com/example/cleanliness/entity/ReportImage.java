@@ -18,8 +18,7 @@ public class ReportImage {
     @Column(name = "file_name", nullable = false)
     private String fileName;
 
-    @Lob
-    @Column(name = "file_path", nullable = false, columnDefinition = "LONGTEXT")
+    @Column(name = "file_path", nullable = false, columnDefinition = "TEXT")
     private String filePath;
 
     @Column(name = "file_type", length = 100)

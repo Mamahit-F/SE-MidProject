@@ -22,7 +22,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("SELECT r FROM Report r WHERE r.reporter = :reporter AND " +
            "(:status IS NULL OR r.status = :status) AND " +
-           "(:search IS NULL OR LOWER(COALESCE(r.location, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.building, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.room, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.description, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.title, '')) LIKE LOWER(CONCAT('%', :search, '%')))")
+           "(:search IS NULL OR LOWER(COALESCE(r.location, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.building, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.room, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.description, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.title, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')))")
     Page<Report> findByReporterWithFilter(@Param("reporter") User reporter,
                                           @Param("status") ReportStatus status,
                                           @Param("search") String search,
@@ -34,7 +34,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("SELECT r FROM Report r WHERE r.status IN :statuses AND " +
            "(:status IS NULL OR r.status = :status) AND " +
-           "(:search IS NULL OR LOWER(COALESCE(r.location, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.building, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.room, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.description, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.title, '')) LIKE LOWER(CONCAT('%', :search, '%')))")
+           "(:search IS NULL OR LOWER(COALESCE(r.location, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.building, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.room, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.description, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.title, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')))")
     Page<Report> findStaffReportsWithFilter(@Param("statuses") Collection<ReportStatus> statuses,
                                            @Param("status") ReportStatus status,
                                            @Param("search") String search,
@@ -42,7 +42,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("SELECT r FROM Report r WHERE " +
            "(:status IS NULL OR r.status = :status) AND " +
-           "(:search IS NULL OR LOWER(COALESCE(r.location, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.building, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.room, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.description, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(COALESCE(r.title, '')) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(r.reporter.fullName) LIKE LOWER(CONCAT('%', :search, '%')))")
+           "(:search IS NULL OR LOWER(COALESCE(r.location, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.building, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.room, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.description, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(COALESCE(r.title, '')) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')) OR LOWER(r.reporter.fullName) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%')))")
     Page<Report> findAdminReportsWithFilter(@Param("status") ReportStatus status,
                                            @Param("search") String search,
                                            Pageable pageable);
