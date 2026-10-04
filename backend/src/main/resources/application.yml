@@ -5,9 +5,9 @@ spring:
   application:
     name: cleanliness-backend
   datasource:
-    url: ${DB_URL:jdbc:postgresql://aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres?sslmode=require}
-    username: ${DB_USERNAME:postgres.piaarkafhjavmnzehzuz}
-    password: ${DB_PASSWORD:WnpxzT1XmnyqziUJ}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -31,7 +31,7 @@ spring:
 
 app:
   jwt:
-    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    secret: ${JWT_SECRET}
     expiration-ms: 86400000 # 24 hours
   upload:
     dir: ${FILE_UPLOAD_DIR:uploads}
