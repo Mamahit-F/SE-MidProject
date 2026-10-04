@@ -3,16 +3,11 @@ import { Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
 import { MobileDrawer } from './MobileDrawer';
-import { DemoAccountBanner } from '../ui/DemoAccountBanner';
-
 export const AppLayout = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
-      {/* SDLC Fast Switcher Top Banner */}
-      <DemoAccountBanner />
-
       <div className="flex-1 flex overflow-hidden">
         {/* Desktop Sidebar (hidden on mobile, visible lg:) */}
         <div className="hidden lg:flex lg:flex-shrink-0">
