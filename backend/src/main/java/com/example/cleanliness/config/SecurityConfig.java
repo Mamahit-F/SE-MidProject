@@ -72,7 +72,7 @@ public class SecurityConfig {
                         // Public preflight OPTIONS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Public auth endpoints
-                        .requestMatchers("/auth/**", "/api/auth/**", "/register", "/login", "/api/v1/auth/**").permitAll()
+                        .requestMatchers("/auth/**", "/api/auth/**", "/register", "/api/register", "/login", "/api/login", "/api/v1/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers(
                                 "/v3/api-docs/**",

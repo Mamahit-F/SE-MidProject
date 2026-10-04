@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping({"/api/auth", "/auth"})
+@RequestMapping({"/api/auth", "/auth", ""})
 @Tag(name = "Authentication", description = "Endpoints untuk registrasi, login, dan autentikasi pengguna")
 public class AuthController {
 
@@ -24,7 +24,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/register")
+    @PostMapping({"/register", "/auth/register", "/api/auth/register", "/api/register"})
     @Operation(summary = "Registrasi Pengguna Baru", description = "Mendaftarkan user baru dengan role USER")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         try {
@@ -41,7 +41,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping({"/login", "/auth/login", "/api/auth/login", "/api/login"})
     @Operation(summary = "Login Pengguna", description = "Login menggunakan username atau email dan password")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         AuthResponse response = authService.login(request);
