@@ -50,14 +50,14 @@ export const reportApi = {
 
     // Check if reportData is FormData or regular object
     if (reportData instanceof FormData) {
-      return axiosClient.post('/reports', reportData, {
+      return axiosClient.post('/api/reports', reportData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
     }
 
-    return axiosClient.post('/reports', reportData);
+    return axiosClient.post('/api/reports', reportData);
   },
 
   approve: async (id) => {
