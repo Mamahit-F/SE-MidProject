@@ -50,12 +50,12 @@ export const BUILDING_LABELS = {
 };
 
 export const REPORT_CATEGORIES = [
-  'Toilet / Kamar Mandi',
-  'Lobi & Koridor',
-  'Ruang Kelas / Kuliah',
-  'Ruang Kerja / Kantor',
-  'Kantin / Food Court',
-  'Taman & Area Luar',
+  'Sisa Makanan',
+  'Bangkai Hewan',
+  'Kotoran Hewan',
+  'Berdebu',
+  'Genangan Air',
+  'Banyak Daun Jatuh',
   'Tempat Sampah Penuh / Bau',
   'Lantai Basah / Licin',
   'Lainnya',
