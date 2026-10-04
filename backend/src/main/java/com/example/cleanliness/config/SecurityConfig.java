@@ -65,13 +65,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints
+                        // Public preflight OPTIONS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/logout").permitAll()
+                        // Public auth endpoints
+                        .requestMatchers("/auth/**", "/api/auth/**", "/api/v1/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers(
                                 "/v3/api-docs/**",
@@ -82,7 +83,6 @@ public class SecurityConfig {
                         // Authenticated profile & photo endpoints for all logged-in roles
                         .requestMatchers("/api/users/me", "/api/users/me/**").authenticated()
                         .requestMatchers("/api/auth/profile", "/api/auth/profile/**", "/api/auth/me", "/api/auth/profile-photo", "/api/auth/profile-photo/**").authenticated()
-                        .requestMatchers("/api/auth/**").permitAll()
 
                         // Role specific endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

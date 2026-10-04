@@ -17,12 +17,12 @@ public class CorsConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+                "https://*.vercel.app",
                 "https://midproject-se.vercel.app",
-                "http://localhost:3000",
-                "http://localhost:5173",
-                "http://127.0.0.1:3000",
-                "http://127.0.0.1:5173"
+                "http://localhost:[*]",
+                "http://127.0.0.1:[*]",
+                "*"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
@@ -38,12 +38,12 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(
+                .allowedOriginPatterns(
+                        "https://*.vercel.app",
                         "https://midproject-se.vercel.app",
-                        "http://localhost:3000",
-                        "http://localhost:5173",
-                        "http://127.0.0.1:3000",
-                        "http://127.0.0.1:5173"
+                        "http://localhost:[*]",
+                        "http://127.0.0.1:[*]",
+                        "*"
                 )
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
