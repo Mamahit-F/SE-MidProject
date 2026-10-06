@@ -354,4 +354,36 @@ export const mockStorage = {
       locationCounts,
     };
   },
+
+  getNotifications: async () => {
+    await sleep(150);
+    const raw = localStorage.getItem('spk_mock_notifications');
+    return raw ? JSON.parse(raw) : [];
+  },
+
+  getUnreadNotificationCount: async () => {
+    await sleep(100);
+    const raw = localStorage.getItem('spk_mock_notifications');
+    const list = raw ? JSON.parse(raw) : [];
+    return { count: list.filter((n) => !n.isRead).length };
+  },
+
+  markNotificationAsRead: async (id) => {
+    await sleep(100);
+    const raw = localStorage.getItem('spk_mock_notifications');
+    const list = raw ? JSON.parse(raw) : [];
+    const item = list.find((n) => n.id === id);
+    if (item) item.isRead = true;
+    localStorage.setItem('spk_mock_notifications', JSON.stringify(list));
+    return item;
+  },
+
+  markAllNotificationsAsRead: async () => {
+    await sleep(100);
+    const raw = localStorage.getItem('spk_mock_notifications');
+    const list = raw ? JSON.parse(raw) : [];
+    list.forEach((n) => { n.isRead = true; });
+    localStorage.setItem('spk_mock_notifications', JSON.stringify(list));
+    return { message: 'All marked as read' };
+  },
 };

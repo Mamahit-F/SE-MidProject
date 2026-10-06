@@ -1,5 +1,6 @@
 package com.example.cleanliness.dto.report;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class ReportImageResponse {
@@ -10,6 +11,8 @@ public class ReportImageResponse {
     private String url;
     private String fileType;
     private Long fileSize;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime createdAt;
 
     public ReportImageResponse() {

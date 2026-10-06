@@ -26,10 +26,12 @@ public class AdminReportService {
 
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
+    private final NotificationService notificationService;
 
-    public AdminReportService(ReportRepository reportRepository, ReportMapper reportMapper) {
+    public AdminReportService(ReportRepository reportRepository, ReportMapper reportMapper, NotificationService notificationService) {
         this.reportRepository = reportRepository;
         this.reportMapper = reportMapper;
+        this.notificationService = notificationService;
     }
 
     @Transactional(readOnly = true)
@@ -121,6 +123,22 @@ public class AdminReportService {
         report.setRejectionReason(null);
 
         Report savedReport = reportRepository.save(report);
+
+        // Notify reporter (User) and cleaning team (Staff)
+        notificationService.notifyUser(
+                savedReport.getReporter(),
+                "Laporan Diterima",
+                "Laporan Anda telah diterima dan akan diproses oleh petugas.",
+                "REPORT_APPROVED",
+                savedReport.getId()
+        );
+        notificationService.notifyStaff(
+                "Laporan Baru",
+                "Ada laporan baru yang telah disetujui dan siap diproses.",
+                "REPORT_APPROVED",
+                savedReport.getId()
+        );
+
         return reportMapper.toResponse(savedReport);
     }
 
@@ -145,6 +163,20 @@ public class AdminReportService {
         report.setRejectionReason(request.getReason().trim());
 
         Report savedReport = reportRepository.save(report);
+
+        // Notify reporter (User) only - Staff MUST NOT receive notification on rejection
+        String rejectionMsg = (savedReport.getRejectionReason() != null && !savedReport.getRejectionReason().trim().isEmpty())
+                ? "Laporan Anda telah ditolak oleh admin. Alasan: " + savedReport.getRejectionReason()
+                : "Laporan Anda telah ditolak oleh admin.";
+
+        notificationService.notifyUser(
+                savedReport.getReporter(),
+                "Laporan Ditolak",
+                rejectionMsg,
+                "REPORT_REJECTED",
+                savedReport.getId()
+        );
+
         return reportMapper.toResponse(savedReport);
     }
 }

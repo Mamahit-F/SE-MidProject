@@ -40,17 +40,20 @@ public class ReportService {
     private final UserRepository userRepository;
     private final FileStorageService fileStorageService;
     private final ReportMapper reportMapper;
+    private final NotificationService notificationService;
 
     public ReportService(ReportRepository reportRepository,
                          ReportImageRepository reportImageRepository,
                          UserRepository userRepository,
                          FileStorageService fileStorageService,
-                         ReportMapper reportMapper) {
+                         ReportMapper reportMapper,
+                         NotificationService notificationService) {
         this.reportRepository = reportRepository;
         this.reportImageRepository = reportImageRepository;
         this.userRepository = userRepository;
         this.fileStorageService = fileStorageService;
         this.reportMapper = reportMapper;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -145,6 +148,14 @@ public class ReportService {
             savedReport.addImage(reportImage);
             reportRepository.save(savedReport);
         }
+
+        // Trigger notification to Admins
+        notificationService.notifyAdmins(
+                "Laporan Baru",
+                "Pengguna mengirim laporan kerusakan baru.",
+                "REPORT_CREATED",
+                savedReport.getId()
+        );
 
         return reportMapper.toResponse(savedReport);
     }

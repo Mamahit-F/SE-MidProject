@@ -30,13 +30,16 @@ public class StaffReportService {
     private final ReportRepository reportRepository;
     private final UserRepository userRepository;
     private final ReportMapper reportMapper;
+    private final NotificationService notificationService;
 
     public StaffReportService(ReportRepository reportRepository,
                               UserRepository userRepository,
-                              ReportMapper reportMapper) {
+                              ReportMapper reportMapper,
+                              NotificationService notificationService) {
         this.reportRepository = reportRepository;
         this.reportMapper = reportMapper;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional(readOnly = true)
@@ -126,6 +129,16 @@ public class StaffReportService {
         }
 
         Report savedReport = reportRepository.save(report);
+
+        // Notify reporter (User) that report is being processed
+        notificationService.notifyUser(
+                savedReport.getReporter(),
+                "Laporan Diproses",
+                "Laporan Anda sedang diproses oleh petugas.",
+                "REPORT_PROCESSING",
+                savedReport.getId()
+        );
+
         return reportMapper.toResponse(savedReport);
     }
 
@@ -155,6 +168,16 @@ public class StaffReportService {
         }
 
         Report savedReport = reportRepository.save(report);
+
+        // Notify reporter (User) that report is resolved
+        notificationService.notifyUser(
+                savedReport.getReporter(),
+                "Laporan Selesai",
+                "Laporan Anda telah selesai ditangani.",
+                "REPORT_RESOLVED",
+                savedReport.getId()
+        );
+
         return reportMapper.toResponse(savedReport);
     }
 }

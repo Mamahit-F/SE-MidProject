@@ -25,6 +25,11 @@ export const parseDate = (dateInput) => {
     let trimmed = dateInput.trim();
     if (!trimmed) return null;
 
+    // Normalise 'YYYY-MM-DD HH:mm:ss' to 'YYYY-MM-DDTHH:mm:ss'
+    if (/^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(trimmed)) {
+      trimmed = trimmed.replace(/\s+/, 'T');
+    }
+
     // If ISO date-time string without timezone indicator (no 'Z' and no +/- offset),
     // treat as UTC so JS does not parse it as the browser's local timezone.
     if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(trimmed)) {

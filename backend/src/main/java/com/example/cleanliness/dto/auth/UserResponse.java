@@ -3,6 +3,7 @@ package com.example.cleanliness.dto.auth;
 import com.example.cleanliness.entity.Role;
 import com.example.cleanliness.entity.UserStatus;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class UserResponse {
@@ -17,7 +18,11 @@ public class UserResponse {
     private String phone;
     private String department;
     private String avatar;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime updatedAt;
 
     public UserResponse() {

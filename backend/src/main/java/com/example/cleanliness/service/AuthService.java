@@ -32,19 +32,22 @@ public class AuthService {
     private final JwtTokenProvider tokenProvider;
     private final UserMapper userMapper;
     private final com.example.cleanliness.storage.FileStorageService fileStorageService;
+    private final NotificationService notificationService;
 
     public AuthService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        AuthenticationManager authenticationManager,
                        JwtTokenProvider tokenProvider,
                        UserMapper userMapper,
-                       com.example.cleanliness.storage.FileStorageService fileStorageService) {
+                       com.example.cleanliness.storage.FileStorageService fileStorageService,
+                       NotificationService notificationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
         this.userMapper = userMapper;
         this.fileStorageService = fileStorageService;
+        this.notificationService = notificationService;
     }
 
     @Transactional(readOnly = true)
@@ -116,6 +119,14 @@ public class AuthService {
             user.setAvatar("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150");
 
             User savedUser = userRepository.save(user);
+
+            // Notify Admins about new user registration
+            notificationService.notifyAdmins(
+                    "Pengguna Baru",
+                    "Ada pengguna baru yang baru mendaftar.",
+                    "USER_REGISTERED",
+                    null
+            );
 
             String token = tokenProvider.generateTokenFromUser(savedUser.getId(), savedUser.getUsername(), savedUser.getRole().name());
             UserResponse userResponse = userMapper.toResponse(savedUser);

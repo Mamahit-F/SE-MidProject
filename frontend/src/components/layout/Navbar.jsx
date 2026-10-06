@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { RoleBadge } from '../ui/Badge';
 import { Button } from '../ui/Button';
+import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { resolveAvatarUrl } from '../../utils/formatters';
 
 export const Navbar = ({ onOpenMobileMenu }) => {
@@ -59,6 +60,9 @@ export const Navbar = ({ onOpenMobileMenu }) => {
               Buat Laporan
             </Button>
           )}
+
+          {/* Notification Bell Dropdown */}
+          <NotificationDropdown />
 
           {/* User Profile Dropdown */}
           <div className="relative">
