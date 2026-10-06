@@ -1,6 +1,7 @@
 package com.example.cleanliness.dto.notification;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class NotificationResponse {
@@ -12,6 +13,8 @@ public class NotificationResponse {
     private String message;
     private String type;
     private Long relatedReportId;
+
+    @JsonProperty("isRead")
     private boolean isRead;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
@@ -90,12 +93,19 @@ public class NotificationResponse {
         this.relatedReportId = relatedReportId;
     }
 
+    @JsonProperty("isRead")
     public boolean isRead() {
         return isRead;
     }
 
+    @JsonProperty("isRead")
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    @JsonProperty("read")
+    public boolean getRead() {
+        return isRead;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -39,7 +39,8 @@ export const NotificationDropdown = () => {
   }, [isOpen]);
 
   const handleNotificationClick = async (notif) => {
-    if (!notif.isRead) {
+    const isRead = Boolean(notif.isRead ?? notif.read ?? notif.is_read);
+    if (!isRead) {
       await markAsRead(notif.id);
     }
     setIsOpen(false);
@@ -137,45 +138,48 @@ export const NotificationDropdown = () => {
                 </p>
               </div>
             ) : (
-              notifications.map((notif) => (
-                <div
-                  key={notif.id}
-                  onClick={() => handleNotificationClick(notif)}
-                  className={`p-3.5 flex items-start gap-3 cursor-pointer transition-colors hover:bg-slate-50 ${
-                    !notif.isRead ? 'bg-sky-50/50' : 'bg-white'
-                  }`}
-                >
-                  {/* Icon */}
-                  <div className="mt-0.5 p-2 rounded-lg bg-slate-100 shrink-0">
-                    {getNotificationIcon(notif.type)}
-                  </div>
+              notifications.map((notif) => {
+                const isRead = Boolean(notif.isRead ?? notif.read ?? notif.is_read);
+                return (
+                  <div
+                    key={notif.id}
+                    onClick={() => handleNotificationClick(notif)}
+                    className={`p-3.5 flex items-start gap-3 cursor-pointer transition-colors hover:bg-slate-50 ${
+                      !isRead ? 'bg-sky-50/50' : 'bg-white'
+                    }`}
+                  >
+                    {/* Icon */}
+                    <div className="mt-0.5 p-2 rounded-lg bg-slate-100 shrink-0">
+                      {getNotificationIcon(notif.type)}
+                    </div>
 
-                  {/* Body */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1 mb-0.5">
-                      <p className={`text-xs ${!notif.isRead ? 'font-bold text-slate-900' : 'font-semibold text-slate-700'}`}>
-                        {notif.title}
+                    {/* Body */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                        <p className={`text-xs ${!isRead ? 'font-bold text-slate-900' : 'font-semibold text-slate-700'}`}>
+                          {notif.title}
+                        </p>
+                        <span className="text-[10px] text-slate-400 shrink-0">
+                          {timeAgo(notif.createdAt)}
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                        {notif.message}
                       </p>
-                      <span className="text-[10px] text-slate-400 shrink-0">
-                        {timeAgo(notif.createdAt)}
-                      </span>
-                    </div>
 
-                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                      {notif.message}
-                    </p>
-
-                    <div className="mt-1 flex items-center justify-between">
-                      <span className="text-[10px] text-slate-400">
-                        {formatDate(notif.createdAt)}
-                      </span>
-                      {!notif.isRead && (
-                        <span className="inline-block w-2 h-2 rounded-full bg-rose-500 shrink-0" />
-                      )}
+                      <div className="mt-1 flex items-center justify-between">
+                        <span className="text-[10px] text-slate-400">
+                          {formatDate(notif.createdAt)}
+                        </span>
+                        {!isRead && (
+                          <span className="inline-block w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>

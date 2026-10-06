@@ -19,8 +19,12 @@ export const NotificationProvider = ({ children }) => {
     if (!silent) setLoading(true);
 
     try {
-      const data = await notificationApi.getAll();
-      const list = Array.isArray(data) ? data : data?.data || [];
+      const rawData = await notificationApi.getAll();
+      const rawList = Array.isArray(rawData) ? rawData : rawData?.data || [];
+      const list = rawList.map((n) => ({
+        ...n,
+        isRead: Boolean(n.isRead !== undefined ? n.isRead : (n.read !== undefined ? n.read : n.is_read)),
+      }));
       setNotifications(list);
       const unread = list.filter((n) => !n.isRead).length;
       setUnreadCount(unread);

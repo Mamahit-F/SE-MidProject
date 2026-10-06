@@ -60,6 +60,9 @@ public class NotificationServiceTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private com.fasterxml.jackson.databind.ObjectMapper objectMapper;
+
     private User testAdmin;
     private User testStaff;
     private User testUser;
@@ -296,5 +299,14 @@ public class NotificationServiceTest {
         assertThrows(RuntimeException.class, () -> {
             notificationService.markAsRead(adminNotifId, testUser.getId());
         });
+    }
+
+    @Test
+    @DisplayName("TEST 10: JSON Serialization of NotificationResponse - verify isRead and read field presence")
+    void testNotificationResponseJsonSerialization() throws Exception {
+        NotificationResponse resp = new NotificationResponse(1L, 2L, "John", "Title", "Msg", "INFO", 10L, true, java.time.LocalDateTime.now());
+        String json = objectMapper.writeValueAsString(resp);
+        assertTrue(json.contains("\"isRead\":true"), "JSON harus menyertakan field isRead:true");
+        assertTrue(json.contains("\"read\":true"), "JSON harus menyertakan field read:true");
     }
 }
