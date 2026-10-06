@@ -92,6 +92,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/reports").hasRole("USER")
                         .requestMatchers("/api/reports/my").hasRole("USER")
                         .requestMatchers("/api/reports/**").authenticated()
+                        .requestMatchers("/api/notifications/**").authenticated()
 
                         // Any other request must be authenticated
                         .anyRequest().authenticated()

@@ -44,6 +44,13 @@ export const NotificationDropdown = () => {
     }
     setIsOpen(false);
 
+    if (notif.type === 'USER_REGISTERED') {
+      if (role === 'ADMIN') {
+        navigate('/admin/users');
+      }
+      return;
+    }
+
     if (notif.relatedReportId) {
       if (role === 'ADMIN') {
         navigate(`/admin/reports/${notif.relatedReportId}`);
