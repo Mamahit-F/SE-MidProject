@@ -5,16 +5,52 @@ export const formatBuilding = (code) => {
   return BUILDING_LABELS[code] || code;
 };
 
+export const APP_TIMEZONE = 'Asia/Makassar'; // WITA (UTC+08:00)
+
+/**
+ * Parses a date input into a valid Date object.
+ * If the input is an ISO string without timezone offset (e.g. from Java LocalDateTime),
+ * it treats it as UTC by appending 'Z', because backend server & DB timestamps represent UTC.
+ */
+export const parseDate = (dateInput) => {
+  if (!dateInput) return null;
+  if (dateInput instanceof Date) {
+    return isNaN(dateInput.getTime()) ? null : dateInput;
+  }
+  if (typeof dateInput === 'number') {
+    const d = new Date(dateInput);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  if (typeof dateInput === 'string') {
+    let trimmed = dateInput.trim();
+    if (!trimmed) return null;
+
+    // If ISO date-time string without timezone indicator (no 'Z' and no +/- offset),
+    // treat as UTC so JS does not parse it as the browser's local timezone.
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(trimmed)) {
+      trimmed = `${trimmed}Z`;
+    }
+
+    const d = new Date(trimmed);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  return null;
+};
+
 export const formatDate = (dateString) => {
   if (!dateString) return '-';
   try {
-    const date = new Date(dateString);
+    const date = parseDate(dateString);
+    if (!date) return dateString;
+
     return new Intl.DateTimeFormat('id-ID', {
+      timeZone: APP_TIMEZONE,
       day: 'numeric',
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
+      hour12: false,
     }).format(date);
   } catch {
     return dateString;
@@ -24,8 +60,11 @@ export const formatDate = (dateString) => {
 export const formatDateOnly = (dateString) => {
   if (!dateString) return '-';
   try {
-    const date = new Date(dateString);
+    const date = parseDate(dateString);
+    if (!date) return dateString;
+
     return new Intl.DateTimeFormat('id-ID', {
+      timeZone: APP_TIMEZONE,
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -37,9 +76,11 @@ export const formatDateOnly = (dateString) => {
 
 export const timeAgo = (dateString) => {
   if (!dateString) return '';
+  const past = parseDate(dateString);
+  if (!past) return '';
+
   const now = new Date();
-  const past = new Date(dateString);
-  const diffInSeconds = Math.floor((now - past) / 1000);
+  const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
 
   if (diffInSeconds < 60) return 'Baru saja';
   const diffInMinutes = Math.floor(diffInSeconds / 60);
