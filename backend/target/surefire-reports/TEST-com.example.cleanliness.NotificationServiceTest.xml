@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.cleanliness.CleanlinessApplicationTests" time="0.03" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.cleanliness.NotificationServiceTest" time="2.21" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -63,9 +63,44 @@
     <property name="java.class.version" value="61.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[cleanliness-backend] "/>
   </properties>
-  <testcase name="contextLoads" classname="com.example.cleanliness.CleanlinessApplicationTests" time="0.006">
-    <system-out><![CDATA[2026-10-07T01:09:57.168+08:00  INFO 9804 --- [cleanliness-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.cleanliness.CleanlinessApplicationTests]: CleanlinessApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-10-07T01:09:57.173+08:00  INFO 9804 --- [cleanliness-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.cleanliness.CleanlinessApplication for test class com.example.cleanliness.CleanlinessApplicationTests
+  <testcase name="testUserRegister_NotifiesAdmin" classname="com.example.cleanliness.NotificationServiceTest" time="0.337">
+    <system-out><![CDATA[2026-10-07T01:09:57.305+08:00  INFO 9804 --- [cleanliness-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.cleanliness.NotificationServiceTest]: NotificationServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-07T01:09:57.309+08:00  INFO 9804 --- [cleanliness-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.cleanliness.CleanlinessApplication for test class com.example.cleanliness.NotificationServiceTest
+2026-10-07T01:09:57.636+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 admin(s): Pengguna Baru
+]]></system-out>
+  </testcase>
+  <testcase name="testSecurityIsolation" classname="com.example.cleanliness.NotificationServiceTest" time="0.243">
+    <system-out><![CDATA[2026-10-07T01:09:57.883+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user admin_test_notif: Admin Only
+2026-10-07T01:09:57.884+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: User Only
+]]></system-out>
+  </testcase>
+  <testcase name="testAdminApprovesReport_NotifiesUserAndStaff" classname="com.example.cleanliness.NotificationServiceTest" time="0.277">
+    <system-out><![CDATA[2026-10-07T01:09:58.132+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 admin(s): Laporan Baru
+2026-10-07T01:09:58.141+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Laporan Diterima
+2026-10-07T01:09:58.145+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 staff member(s): Laporan Baru
+]]></system-out>
+  </testcase>
+  <testcase name="testUserCreatesReport_NotifiesAdminOnly" classname="com.example.cleanliness.NotificationServiceTest" time="0.284">
+    <system-out><![CDATA[2026-10-07T01:09:58.447+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 admin(s): Laporan Baru
+]]></system-out>
+  </testcase>
+  <testcase name="testNotificationResponseJsonSerialization" classname="com.example.cleanliness.NotificationServiceTest" time="0.271"/>
+  <testcase name="testUnreadCountAndMarkAsRead" classname="com.example.cleanliness.NotificationServiceTest" time="0.28">
+    <system-out><![CDATA[2026-10-07T01:09:58.967+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Notif 1
+2026-10-07T01:09:58.972+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Notif 2
+]]></system-out>
+  </testcase>
+  <testcase name="testAdminRejectsReport_NotifiesUserOnly" classname="com.example.cleanliness.NotificationServiceTest" time="0.253">
+    <system-out><![CDATA[2026-10-07T01:09:59.255+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 admin(s): Laporan Baru
+2026-10-07T01:09:59.260+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Laporan Ditolak
+]]></system-out>
+  </testcase>
+  <testcase name="testStaffProcessAndResolve_NotifiesUser" classname="com.example.cleanliness.NotificationServiceTest" time="0.241">
+    <system-out><![CDATA[2026-10-07T01:09:59.489+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 admin(s): Laporan Baru
+2026-10-07T01:09:59.492+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Laporan Diterima
+2026-10-07T01:09:59.494+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to 1 staff member(s): Laporan Baru
+2026-10-07T01:09:59.499+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Laporan Diproses
+2026-10-07T01:09:59.507+08:00  INFO 9804 --- [cleanliness-backend] [           main] c.e.c.service.NotificationService        : Notification sent to user user_test_notif: Laporan Selesai
 ]]></system-out>
   </testcase>
 </testsuite>

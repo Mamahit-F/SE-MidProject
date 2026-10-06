@@ -1,5 +1,7 @@
+com\example\cleanliness\repository\NotificationRepository.class
 com\example\cleanliness\config\OpenApiConfig.class
 com\example\cleanliness\dto\dashboard\StaffDashboardResponse.class
+com\example\cleanliness\dto\notification\NotificationResponse.class
 com\example\cleanliness\dto\report\ReportResponse$TimelineItem.class
 com\example\cleanliness\service\StaffReportService.class
 com\example\cleanliness\entity\User.class
@@ -11,6 +13,7 @@ com\example\cleanliness\controller\UserDashboardController.class
 com\example\cleanliness\mapper\UserMapper.class
 com\example\cleanliness\storage\FileStorageService.class
 com\example\cleanliness\repository\UserRepository.class
+com\example\cleanliness\service\NotificationService.class
 com\example\cleanliness\service\AuthService.class
 com\example\cleanliness\service\DashboardService.class
 com\example\cleanliness\config\CorsConfig.class
@@ -18,7 +21,9 @@ com\example\cleanliness\dto\auth\LoginRequest.class
 com\example\cleanliness\exception\ErrorResponse.class
 com\example\cleanliness\controller\AdminUserController.class
 com\example\cleanliness\controller\ReportController.class
+com\example\cleanliness\controller\NotificationController.class
 com\example\cleanliness\security\JwtTokenProvider.class
+com\example\cleanliness\entity\Notification.class
 com\example\cleanliness\dto\report\ReportImageResponse.class
 com\example\cleanliness\entity\Report.class
 com\example\cleanliness\controller\StaffDashboardController.class

@@ -1,5 +1,6 @@
-com\example\cleanliness\AuthServiceTest.class
 com\example\cleanliness\ReportWorkflowTest.class
 com\example\cleanliness\FileStorageServiceTest.class
-com\example\cleanliness\CleanlinessApplicationTests.class
+com\example\cleanliness\NotificationServiceTest.class
 com\example\cleanliness\ReportSecurityAndOwnershipTest.class
+com\example\cleanliness\AuthServiceTest.class
+com\example\cleanliness\CleanlinessApplicationTests.class

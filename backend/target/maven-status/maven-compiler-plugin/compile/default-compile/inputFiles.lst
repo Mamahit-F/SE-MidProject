@@ -7,6 +7,7 @@ D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\co
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\AdminReportController.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\AdminUserController.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\AuthController.java
+D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\NotificationController.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\ReportController.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\StaffDashboardController.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\controller\StaffReportController.java
@@ -21,11 +22,13 @@ D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\co
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\dashboard\AdminDashboardResponse.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\dashboard\StaffDashboardResponse.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\dashboard\UserDashboardResponse.java
+D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\notification\NotificationResponse.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\report\RejectReportRequest.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\report\ReportCreateRequest.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\report\ReportImageResponse.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\report\ReportResponse.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\dto\report\ReportStatusResponse.java
+D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\entity\Notification.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\entity\Report.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\entity\ReportImage.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\entity\ReportStatus.java
@@ -42,6 +45,7 @@ D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\co
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\exception\UnauthorizedException.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\mapper\ReportMapper.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\mapper\UserMapper.java
+D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\repository\NotificationRepository.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\repository\ReportImageRepository.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\repository\ReportRepository.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\repository\UserRepository.java
@@ -54,6 +58,7 @@ D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\co
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\AdminReportService.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\AuthService.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\DashboardService.java
+D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\NotificationService.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\ReportService.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\StaffReportService.java
 D:\from c\Documents\holyyy\SoftwareEngineering\tugasmid\backend\src\main\java\com\example\cleanliness\service\UserService.java
